@@ -9,10 +9,10 @@ const router = express.Router()
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, '../assets/'); // Save files in the 'uploads' folder
+    cb(null,  '../admin-client/assets'); 
   },
   filename: (req, file, cb) => {
-    const uniqueName = Date.now() + '-' + file.originalname;  // Use timestamp to avoid conflicts
+    const uniqueName = Date.now() + '-' + file.originalname;  
     cb(null, uniqueName);  // Save the file with the unique name
   }
 });
