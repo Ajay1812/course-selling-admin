@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, Typography, Button, CircularProgress, Grid } from "@mui/material"; // Import Grid
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../config.js"
 
 export function GetCourses() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export function GetCourses() {
   const fetchInfo = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:3000/admin/courses', {
+      const response = await axios.get(`${BASE_URL}/admin/courses`, {
         headers: {
           'Content-Type': "application/json",
           'Authorization': `Bearer ${localStorage.getItem('token')}`

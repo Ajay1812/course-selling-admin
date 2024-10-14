@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card, Typography, Button } from "@mui/material";
 import axios from "axios";
+import { BASE_URL } from "../../config.js"
 
 export function CourseDetails() {
   const { courseId } = useParams();
@@ -10,7 +11,7 @@ export function CourseDetails() {
   const fetchCourseDetails = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/admin/courses/${courseId}`,
+        `${BASE_URL}/admin/courses/${courseId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

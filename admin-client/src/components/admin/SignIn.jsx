@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import { Card, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../config.js"
 
 export function SignIn() {
   const navigate = useNavigate()
@@ -49,7 +50,7 @@ export function SignIn() {
           <br /> <br />
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button size="large" variant="contained" onClick={() => {
-              fetch('http://localhost:3000/admin/login', {
+              fetch(`${BASE_URL}/admin/login`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

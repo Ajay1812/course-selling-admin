@@ -4,6 +4,7 @@ import { DropDownMenu } from './DropDown';
 import { CourseTable } from './TableData';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import { BASE_URL } from "../../config.js"
 // import MenuIcon from '@mui/icons-material/Menu';
 
 export function AddCourse() {
@@ -38,7 +39,8 @@ export function AddCourse() {
       formData.append('image', file);
     }
 
-    await fetch('http://localhost:3000/admin/courses', {
+    // await fetch(`http://localhost:3000/admin/courses`, {
+    await fetch(`${BASE_URL}/admin/courses`, {
       method: "POST",
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`

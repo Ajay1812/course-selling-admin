@@ -1,6 +1,7 @@
 import { Card, Typography, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../config.js"
 
 export function SignUp() {
   const navigate = useNavigate('')
@@ -51,7 +52,7 @@ export function SignUp() {
               size="large"
               variant="contained"
               onClick={() => {
-                fetch("http://localhost:3000/admin/signup", {
+                fetch(`${BASE_URL}/admin/signup`, {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",

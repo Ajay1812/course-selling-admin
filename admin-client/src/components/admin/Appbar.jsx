@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../config.js"
 
 export function Appbar() {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ export function Appbar() {
   const fetchUserEmail = () => {
     const token = localStorage.getItem('token');
     if (token) {
-      fetch('http://localhost:3000/admin/me', {
+      fetch(`${BASE_URL}/admin/me`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`

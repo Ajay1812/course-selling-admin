@@ -5,6 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditSharpIcon from '@mui/icons-material/EditSharp';
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../config.js"
 
 export function CourseTable({ refresh }) {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export function CourseTable({ refresh }) {
   const fetchInfo = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:3000/admin/courses/", {
+      const response = await axios.get(`${BASE_URL}/admin/courses/`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -40,7 +41,7 @@ export function CourseTable({ refresh }) {
 
   const handleDelete = async (courseId) => {
     try {
-      await axios.delete(`http://localhost:3000/admin/courses/${courseId}`, {
+      await axios.delete(`${BASE_URL}/admin/courses/${courseId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -79,7 +80,7 @@ export function CourseTable({ refresh }) {
         formData.append('image', currentCourse.image);
       }
 
-      await axios.put(`http://localhost:3000/admin/courses/${currentCourse._id}`, formData, {
+      await axios.put(`${BASE_URL}/admin/courses/${currentCourse._id}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           'Content-Type': 'multipart/form-data',
