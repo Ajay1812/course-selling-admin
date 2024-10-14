@@ -57,14 +57,17 @@ This project is a Course Selling Website built using React and nodejs. It allows
 1. **Installation and Setup**
 
 ```bash
-    git clone https://github.com/Ajay1812/Cohort_Full_Stack.git
-    cd JavaScript/Assignments/week4/vite-course-selling-app
+    git clone https://github.com/Ajay1812/course-selling-admin.git
+    cd course-selling-admin
 ```
 
 2. **Install dependencies:** Navigate to the project directory and install the required packages for both frontend and backend:
 
 ```bash
-    cd vite-course-selling-app
+    cd course-selling-app/admin-client
+    npm install
+    cd ..
+    cd course-selling-app/server
     npm install
 ```
 
