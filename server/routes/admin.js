@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
     cb(null,  '../admin-client/assets'); 
   },
   filename: (req, file, cb) => {
-    const uniqueName = Date.now() + '-' + file.originalname;  
+    const uniqueName = Date.now() + '-' + file.originalname;  // Use timestamp to avoid conflicts
     cb(null, uniqueName);  // Save the file with the unique name
   }
 });
