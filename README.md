@@ -67,7 +67,7 @@ This project is a Course Selling Website built using React and nodejs. It allows
     cd course-selling-app/admin-client
     npm install
     cd ..
-    cd course-selling-app/server
+    cd server
     npm install
 ```
 
