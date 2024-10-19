@@ -1,11 +1,13 @@
 const {User, Course, Admin} = require('../db')
 const multer = require('multer');
 const path = require('path');
+const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const {SECRET} = require('../middleware/auth')
 const {authenticateJwt} = require('../middleware/auth')
 const express = require('express')
 const router = express.Router() 
+const nodemailer = require('nodemailer')
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -35,28 +37,70 @@ router.post("/signup", async (req, res) => {
   if (admin) {
     res.status(403).json({ message: "Admin already exists" });
   } else {
-    // const obj = {username : username , password: password}
-    const newAdmin = new Admin({ username, password });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newAdmin = new Admin({ username, password: hashedPassword });
     await newAdmin.save();
-    const token = jwt.sign({ username, role: "admin" }, SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign({ username, role: "admin" }, SECRET, { expiresIn: "1h"});
     res.json({ message: "Admin created successfully", token });
   }
 });
 
+// Login
 router.post("/login", async (req, res) => {
-  const { username, password } = req.headers;
-  const admin = await Admin.findOne({ username, password });
-  if (admin) {
-    const token = jwt.sign({ username, role: "admin" }, SECRET, {
+  const { username, password } = req.headers; 
+  try {
+    const admin = await Admin.findOne({ username });
+    if (!admin || !(bcrypt.compare(password, admin.password))) {
+      return res.status(401).json({ message: 'Invalid username or password' });
+    }
+    const token = jwt.sign({ username: admin.username, role: "admin" }, SECRET, {
       expiresIn: "1h",
     });
     res.status(200).json({ message: "Logged in successfully", token });
-  } else {
-    res.status(403).json({ message: "Invalid username or password" });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
   }
 });
+
+router.post('/forgot-password', async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    const admin = await Admin.findOne({ username });
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found." });
+    }
+    const token = jwt.sign({ id: admin._id, role: "admin" }, SECRET, {
+      expiresIn: "1h",
+    });
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER, 
+        pass: process.env.GMAIL_PASS, 
+      },
+    });
+    let mailOptions = {
+      from: process.env.GMAIL_USER, 
+      to: admin.username, 
+      subject: 'Reset your password',
+      text: `Click here to reset your password: http://localhost:5173/admin/reset-password/${admin._id}/${token}`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Error sending email." });
+      } else {
+        return res.status(200).json({ message: "Check your email for the reset link." });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error." });
+  }
+});
+
 
 // Create and update courses
 router.post("/courses", authenticateJwt, upload.single('image'), async (req, res) => {

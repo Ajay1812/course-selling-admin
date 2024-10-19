@@ -1,10 +1,30 @@
 const mongoose = require('mongoose');
-
+const bcrypt = require('bcrypt')
 // Define Mongoose Schemas
 const adminSchema = new mongoose.Schema({
-  username: String,
-  password: String,
+  username: {
+    type: String,
+    required: true,
+    lowercase : true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
 });
+
+adminSchema.pre('save', async function (next) {
+  try {
+    const salt = await bcrypt.genSalt(10)
+    const hashedPass = await bcrypt.hash(this.password, salt)
+    this.password = hashedPass
+    next()
+  } catch (error) {
+    next(error)
+  }
+})
+
 
 const userSchema = new mongoose.Schema({
   username: String,

@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { Card, Typography } from "@mui/material";
+import { Card, Typography, Link } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../config.js"
@@ -26,7 +26,7 @@ export function SignIn() {
       </div>
       <br />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Card style={{ width: "400px", padding: "20px", border: "1px solid black", borderRadius: "20px", boxShadow: "5.3px 10.6px 10.6px hsl(0deg 0% 0% / 0.34)" }} variant="outlined">
+        <Card style={{ width: "400px", padding: "20px", border: "1px solid black", borderRadius: "20px", boxShadow: "6.3px 10.6px 10.6px hsl(0deg 0% 0% / 0.34)" }} variant="outlined">
           <TextField
             onChange={(e) => {
               // console.log(e)
@@ -48,6 +48,7 @@ export function SignIn() {
             type={"password"}
           />
           <br /> <br />
+          <Link href="/forgot-password">Forgot Password</Link>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button size="large" variant="contained" onClick={() => {
               fetch(`${BASE_URL}/admin/login`, {
