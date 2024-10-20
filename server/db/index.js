@@ -5,13 +5,16 @@ const adminSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    lowercase : true,
+    lowercase: true,
     unique: true
   },
   password: {
     type: String,
     required: true
   },
+  verifyToken:{ 
+    type: String,
+  }
 });
 
 adminSchema.pre('save', async function (next) {

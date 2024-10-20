@@ -48,7 +48,7 @@ export function SignIn() {
             type={"password"}
           />
           <br /> <br />
-          <Link href="/forgot-password">Forgot Password</Link>
+          <Link href="/password-reset">Forgot Password</Link>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button size="large" variant="contained" onClick={() => {
               fetch(`${BASE_URL}/admin/login`, {

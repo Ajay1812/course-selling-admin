@@ -1,41 +1,61 @@
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import { Card, Typography } from "@mui/material";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../../config.js";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { BASE_URL } from "../../config";
+import { Card, Typography, TextField, Button } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
 
 export function ForgotPassword() {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('')
+  const [message, setMessage] = useState('')
+  const navigator = useNavigate('')
+  const { id, token } = useParams()
 
-  const handleForgotPassword = async () => {
-    try {
-      const response = await axios.post(`${BASE_URL}/admin/forgot-password`, {
-        username: email
-      });
-      console.log(response.data);
-      navigate('/reset-password'); // Navigate if email is successfully sent
-    } catch (error) {
-      console.error('Error sending reset email:', error);
+  const adminValid = async () => {
+    const res = await fetch(`${BASE_URL}/admin/forgotpassword/${id}/${token}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const data = await res.json()
+    if (data.status == 201) {
+      console.log("Admin valid")
+    } else {
+      navigator('*')
     }
-  };
+  }
+  useEffect(() => {
+    adminValid()
+  }, [])
 
+  const sendPassword = async (e) => {
+    e.preventDefault()
+    const res = await fetch(`${BASE_URL}/admin/${id}/${token}`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ password })
+    })
+    const data = await res.json()
+    if (data.status == 201) {
+      setPassword('')
+      setMessage(true) // FIXME: check the after update password message not working
+    } else {
+      toast.error("! Token expired generate a new Link")
+    }
+
+  }
   return (
-    <div style={{ height: "100vh" }}>
+    <>
       <div
         style={{
-          paddingTop: "150px",
-          marginBottom: 10,
+          height: "100vh",
           display: "flex",
           justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <Typography variant={"h4"}>Forgot Password</Typography>
-      </div>
-      <br />
-      <div style={{ display: "flex", justifyContent: "center" }}>
         <Card
           style={{
             width: "400px",
@@ -46,24 +66,37 @@ export function ForgotPassword() {
           }}
           variant="outlined"
         >
+          <Typography textAlign={"center"} variant={"h4"}>
+            Enter your new password
+          </Typography>
+          <br />
+          {message && (
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <p style={{ color: "green", fontWeight: "bold" }}>
+                Password Successfully Updated.
+              </p>
+            </div>
+          )}
           <TextField
-            onChange={(e) => setEmail(e.target.value)}
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             fullWidth={true}
-            label="Email"
+            label="New password"
+            placeholder="Enter your new password"
             variant="outlined"
+            required
           />
-          <br /> <br />
+          <br />
+          <br />
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <Button
-              size="large"
-              variant="contained"
-              onClick={handleForgotPassword}
-            >
-              Reset
+            <Button size="large" variant="contained" onClick={sendPassword}>
+              Change Password
             </Button>
           </div>
         </Card>
+        <ToastContainer />
       </div>
-    </div>
-  );
+    </>
+  )
 }
