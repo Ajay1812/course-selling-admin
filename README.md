@@ -4,29 +4,28 @@ This project is a Course Selling Website built using React and nodejs. It allows
 
 ## Demo Screenshots
 
-### Signup Page
+### Langing Page
+<img width="1440" alt="landing-page" src="https://github.com/user-attachments/assets/4b60949c-4017-4699-abfb-610256ddedeb">
 
+### Signup Page
 <img width="807" alt="Signup" src="https://github.com/user-attachments/assets/1131d810-2ab7-4e5f-8ab0-85b9ae60e585">
 
 ### Signin Page
-
-<img width="868" alt="Signin" src="https://github.com/user-attachments/assets/4a5c50a3-7919-4bb2-b4e0-c109f2a83c87">
+<img width="1440" alt="signin" src="https://github.com/user-attachments/assets/7cb71235-1678-4a0f-92c6-820e871cf2e9">
 
 ### Courses Page
-
-<img width="1435" alt="course" src="https://github.com/user-attachments/assets/d6c48bfc-6960-469b-a1f1-446459cb54f6">
+<img width="1440" alt="courses" src="https://github.com/user-attachments/assets/0794431d-547f-4adf-85bc-cb480da161a2">
 
 ### Add Course and Courses Table Page
-
-<img width="1440" alt="addcourse page and table" src="https://github.com/user-attachments/assets/58cd6c25-1b81-47b6-9a27-8da922e68149">
+<img width="1440" alt="course-management" src="https://github.com/user-attachments/assets/af67a55e-82c2-4e95-8523-e99abd00b5ad">
+<img width="1436" alt="add courses" src="https://github.com/user-attachments/assets/94fde54a-5c8f-422e-a305-5126760dba81">
 
 ### MongoDB Database Overview
 
 <img width="1437" alt="mongodb" src="https://github.com/user-attachments/assets/bad33e07-def0-4a21-af80-ecb9372fec09">
 
 ### Dialog Box for Course Update
-
-<img width="1440" alt="Dialog box for updation" src="https://github.com/user-attachments/assets/07fbc829-9be4-4fbf-a964-56c64c6d93c9">
+<img width="1438" alt="add dialogbox" src="https://github.com/user-attachments/assets/e4d8f24a-1e48-4b51-a390-e3206955a4f5">
 
 ## Features
 
@@ -82,13 +81,10 @@ This project is a Course Selling Website built using React and nodejs. It allows
     SECRET_JWT=your-secret
 ```
 
-4. **Run the application:** Start both the frontend and backend servers:
+4. **Run the application:** Start both the frontend and backend servers on PORT 3000:
 
 ```bash
-   ## Run the backend server
-    npm run server
-
-   ## In another terminal, run the frontend
+    cd server
     npm start
 ```
 
